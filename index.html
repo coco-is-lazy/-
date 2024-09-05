@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>학생 점수 조회</title>
+    <style>
+        /* 간단한 스타일 */
+        body { font-family: Arial, sans-serif; }
+        form { margin: 20px; }
+        input[type="text"], input[type="submit"] { margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>학생 점수 조회</h1>
+    <form id="scoreForm">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="class">반:</label>
+        <input type="text" id="class" name="class" required><br>
+        <input type="submit" value="점수 확인">
+    </form>
+    <div id="result"></div>
+    <script>
+        // 여기에서 점수 데이터를 추가하세요 (예시 데이터)
+        const data = [
+            [
+    {
+        "name": "정체원",
+        "class": "100A반",
+        "score": 81
+    },
+    {
+        "name": "김예진",
+        "class": "100A반",
+        "score": 70
+    },
+    {
+        "name": "하성우",
+        "class": "100A반",
+        "score": 53
+    },
+    {
+        "name": "김지원",
+        "class": "100A반",
+        "score": 55
+    },
+    {
+        "name": "박설이",
+        "class": "100A반",
+        "score": 69
+    },
+    {
+        "name": "오은지",
+        "class": "100A반",
+        "score": 74
+    },
+    {
+        "name": "방시윤",
+        "class": "100A반",
+        "score": 69
+    },
+    {
+        "name": "엄대성",
+        "class": "100A반",
+        "score": 53
+    },
+    {
+        "name": "박정민",
+        "class": "100A반",
+        "score": 52
+    },
+    {
+        "name": "송지우",
+        "class": "100A반",
+        "score": 73
+    },
+    {
+        "name": "도대경",
+        "class": "100A반",
+        "score": 67
+    },
+    {
+        "name": "최선웅",
+        "class": "100A반",
+        "score": 71
+    },
+    {
+        "name": "이은채",
+        "class": "100A반",
+        "score": 68
+    },
+    {
+        "name": "이유안",
+        "class": "100A반",
+        "score": 29
+    },
+    {
+        "name": "이정운",
+        "class": "100A반",
+        "score": 62
+    },
+    {
+        "name": "강지영",
+        "class": "100A반",
+        "score": 76
+    },
+    {
+        "name": "이희준",
+        "class": "100A반",
+        "score": 80
+    },
+    {
+        "name": "정홍찬",
+        "class": "100A반",
+        "score": 75
+    },
+    {
+        "name": "이여원",
+        "class": "100A반",
+        "score": 73
+    },
+    {
+        "name": "이예원",
+        "class": "100A반",
+        "score": 77
+    },
+    {
+        "name": "성유민",
+        "class": "100B반",
+        "score": 62
+    },
+    {
+        "name": "최한나",
+        "class": "100B반",
+        "score": 73
+    },
+    {
+        "name": "권규리",
+        "class": "100B반",
+        "score": 57
+    },
+    {
+        "name": "이재원",
+        "class": "100B반",
+        "score": 75
+    },
+    {
+        "name": "맹미현",
+        "class": "100B반",
+        "score": 59
+    },
+    {
+        "name": "진윤이",
+        "class": "100B반",
+        "score": 76
+    },
+    {
+        "name": "이규리",
+        "class": "100B반",
+        "score": 69
+    },
+    {
+        "name": "안현경",
+        "class": "100B반",
+        "score": 73
+    },
+    {
+        "name": "주윤기",
+        "class": "100B반",
+        "score": 75
+    },
+    {
+        "name": "이영주B",
+        "class": "100B반",
+        "score": 70
+    },
+    {
+        "name": "사윤제",
+        "class": "100B반",
+        "score": 67
+    },
+    {
+        "name": "이준우",
+        "class": "100B반",
+        "score": 73
+    },
+    {
+        "name": "임채원",
+        "class": "100B반",
+        "score": 73
+    },
+    {
+        "name": "범다현",
+        "class": "100B반",
+        "score": 72
+    },
+    {
+        "name": "김민상",
+        "class": "100B반",
+        "score": 69
+    },
+    {
+        "name": "손현준",
+        "class": "100B반",
+        "score": 73
+    },
+    {
+        "name": "하아라",
+        "class": "100B반",
+        "score": 75
+    },
+    {
+        "name": "최다은",
+        "class": "100B반",
+        "score": 50
+    },
+    {
+        "name": "최찬현",
+        "class": "100B반",
+        "score": 64
+    },
+    {
+        "name": "변제환",
+        "class": "소수반",
+        "score": 69
+    },
+    {
+        "name": "정동우",
+        "class": "소수반",
+        "score": 77
+    },
+    {
+        "name": "이해인",
+        "class": "소수반",
+        "score": 64
+    },
+    {
+        "name": "박윤희",
+        "class": "주말반",
+        "score": 60
+    },
+    {
+        "name": "김유진",
+        "class": "주말반",
+        "score": 75
+    },
+    {
+        "name": "이유미",
+        "class": "주말반",
+        "score": 65
+    },
+    {
+        "name": "이지영",
+        "class": "주말반",
+        "score": 70
+    },
+    {
+        "name": "이치연",
+        "class": "주말반",
+        "score": 70
+    },
+    {
+        "name": "조성아",
+        "class": "주말반",
+        "score": 76
+    },
+    {
+        "name": "조희서",
+        "class": "주말반",
+        "score": 70
+    },
+    {
+        "name": "한승윤",
+        "class": "주말반",
+        "score": 66
+    },
+    {
+        "name": "나준석",
+        "class": "주말반",
+        "score": 60
+    },
+    {
+        "name": "고예영",
+        "class": "A반",
+        "score": 74
+    },
+    {
+        "name": "조예나",
+        "class": "A반",
+        "score": 75
+    },
+    {
+        "name": "홍사라",
+        "class": "A반",
+        "score": 83
+    },
+    {
+        "name": "문서영",
+        "class": "A반",
+        "score": 59
+    },
+    {
+        "name": "강제규",
+        "class": "A반",
+        "score": 71
+    },
+    {
+        "name": "송인주",
+        "class": "A반",
+        "score": 77
+    },
+    {
+        "name": "오승연",
+        "class": "A반",
+        "score": 91
+    },
+    {
+        "name": "최인아",
+        "class": "A반",
+        "score": 78
+    },
+    {
+        "name": "정채린",
+        "class": "A반",
+        "score": 85
+    },
+    {
+        "name": "김선우",
+        "class": "A반",
+        "score": 74
+    },
+    {
+        "name": "김주은",
+        "class": "A반",
+        "score": 50
+    },
+    {
+        "name": "원소정",
+        "class": "A반",
+        "score": 70
+    },
+    {
+        "name": "유아연",
+        "class": "A반",
+        "score": 60
+    },
+    {
+        "name": "이동준",
+        "class": "A반",
+        "score": 72
+    },
+    {
+        "name": "허다경",
+        "class": "A반",
+        "score": 80
+    },
+    {
+        "name": "황지원",
+        "class": "A반",
+        "score": 82
+    },
+    {
+        "name": "한혜주",
+        "class": "B반",
+        "score": 80
+    },
+    {
+        "name": "오지현",
+        "class": "B반",
+        "score": 80
+    },
+    {
+        "name": "신형철",
+        "class": "B반",
+        "score": 83
+    },
+    {
+        "name": "박수지",
+        "class": "B반",
+        "score": 82
+    },
+    {
+        "name": "김진석",
+        "class": "B반",
+        "score": 82
+    },
+    {
+        "name": "장효진",
+        "class": "B반",
+        "score": 90
+    },
+    {
+        "name": "장효원",
+        "class": "B반",
+        "score": 85
+    },
+    {
+        "name": "이경미",
+        "class": "B반",
+        "score": 40
+    },
+    {
+        "name": "이설아",
+        "class": "B반",
+        "score": 61
+    },
+    {
+        "name": "최윤서",
+        "class": "B반",
+        "score": 79
+    },
+    {
+        "name": "김예찬",
+        "class": "B반",
+        "score": 66
+    },
+    {
+        "name": "최승권",
+        "class": "B반",
+        "score": 74
+    },
+    {
+        "name": "김민지",
+        "class": "B반",
+        "score": 73
+    },
+    {
+        "name": "남가언",
+        "class": "B반",
+        "score": 75
+    },
+    {
+        "name": "한정민",
+        "class": "B반",
+        "score": 75
+    },
+    {
+        "name": "정수아",
+        "class": "C반",
+        "score": 77
+    },
+    {
+        "name": "최설안",
+        "class": "C반",
+        "score": 78
+    },
+    {
+        "name": "김기범",
+        "class": "C반",
+        "score": 72
+    },
+    {
+        "name": "두연수",
+        "class": "C반",
+        "score": 74
+    },
+    {
+        "name": "구진모",
+        "class": "C반",
+        "score": 77
+    },
+    {
+        "name": "김민제",
+        "class": "C반",
+        "score": 74
+    },
+    {
+        "name": "박한세",
+        "class": "C반",
+        "score": 74
+    },
+    {
+        "name": "박규도",
+        "class": "C반",
+        "score": 85
+    },
+    {
+        "name": "이승연",
+        "class": "C반",
+        "score": 79
+    },
+    {
+        "name": "박주영",
+        "class": "C반",
+        "score": 75
+    },
+    {
+        "name": "정다희",
+        "class": "C반",
+        "score": 81
+    },
+    {
+        "name": "김희은",
+        "class": "C반",
+        "score": 77
+    },
+    {
+        "name": "이태준",
+        "class": "C반",
+        "score": 75
+    },
+    {
+        "name": "이승환",
+        "class": "C반",
+        "score": 78
+    },
+    {
+        "name": "추선경",
+        "class": "C반",
+        "score": 76
+    },
+    {
+        "name": "김상은",
+        "class": "C반",
+        "score": 76
+    },
+    {
+        "name": "손유나",
+        "class": "C반",
+        "score": 82
+    },
+    {
+        "name": "유가은",
+        "class": "C반",
+        "score": 68
+    },
+    {
+        "name": "이정은",
+        "class": "C반",
+        "score": 77
+    },
+    {
+        "name": "장은서",
+        "class": "C반",
+        "score": 78
+    },
+    {
+        "name": "정태균",
+        "class": "C반",
+        "score": 38
+    },
+    {
+        "name": "정현민",
+        "class": "C반",
+        "score": 77
+    },
+    {
+        "name": "최정연",
+        "class": "C반",
+        "score": 85
+    },
+    {
+        "name": "최민영",
+        "class": "D반",
+        "score": 74
+    },
+    {
+        "name": "조장흠",
+        "class": "D반",
+        "score": 40
+    },
+    {
+        "name": "오현정",
+        "class": "D반",
+        "score": 76
+    },
+    {
+        "name": "김세인",
+        "class": "D반",
+        "score": 81
+    },
+    {
+        "name": "이새별",
+        "class": "D반",
+        "score": 75
+    },
+    {
+        "name": "신혜림",
+        "class": "D반",
+        "score": 78
+    },
+    {
+        "name": "김황현",
+        "class": "D반",
+        "score": 83
+    },
+    {
+        "name": "김수아",
+        "class": "D반",
+        "score": 75
+    },
+    {
+        "name": "정다인",
+        "class": "D반",
+        "score": 75
+    },
+    {
+        "name": "김현호",
+        "class": "D반",
+        "score": 80
+    },
+    {
+        "name": "이유진",
+        "class": "D반",
+        "score": 69
+    },
+    {
+        "name": "이예림",
+        "class": "D반",
+        "score": 66
+    },
+    {
+        "name": "공혜원",
+        "class": "D반",
+        "score": 78
+    },
+    {
+        "name": "김경준",
+        "class": "D반",
+        "score": 74
+    },
+    {
+        "name": "신서희",
+        "class": "D반",
+        "score": 64
+    },
+    {
+        "name": "신호진",
+        "class": "D반",
+        "score": 87
+    },
+    {
+        "name": "이민영",
+        "class": "D반",
+        "score": 75
+    },
+    {
+        "name": "이연호",
+        "class": "D반",
+        "score": 70
+    },
+    {
+        "name": "조성우",
+        "class": "D반",
+        "score": 78
+    },
+    {
+        "name": "최현",
+        "class": "D반",
+        "score": 76
+    },
+    {
+        "name": "최여민",
+        "class": "D반",
+        "score": 83
+    },
+    {
+        "name": "이동현",
+        "class": "E반",
+        "score": 77
+    },
+    {
+        "name": "박세영",
+        "class": "E반",
+        "score": 75
+    },
+    {
+        "name": "한수현",
+        "class": "E반",
+        "score": 76
+    },
+    {
+        "name": "정서윤",
+        "class": "E반",
+        "score": 76
+    },
+    {
+        "name": "이순범",
+        "class": "E반",
+        "score": 75
+    },
+    {
+        "name": "김형민",
+        "class": "E반",
+        "score": 76
+    },
+    {
+        "name": "고희선",
+        "class": "E반",
+        "score": 81
+    },
+    {
+        "name": "김채영",
+        "class": "E반",
+        "score": 78
+    },
+    {
+        "name": "한정현",
+        "class": "E반",
+        "score": 76
+    },
+    {
+        "name": "문수진",
+        "class": "E반",
+        "score": 45
+    },
+    {
+        "name": "양범규",
+        "class": "E반",
+        "score": 45
+    },
+    {
+        "name": "오수린",
+        "class": "E반",
+        "score": 65
+    },
+    {
+        "name": "김선아",
+        "class": "G반",
+        "score": 69
+    },
+    {
+        "name": "이지연",
+        "class": "G반",
+        "score": 63
+    },
+    {
+        "name": "손현진",
+        "class": "G반",
+        "score": 76
+    },
+    {
+        "name": "신정인",
+        "class": "G반",
+        "score": 83
+    },
+    {
+        "name": "정희연",
+        "class": "G반",
+        "score": 83
+    },
+    {
+        "name": "박강인",
+        "class": "G반",
+        "score": 80
+    },
+    {
+        "name": "신정인",
+        "class": "G반",
+        "score": 76
+    },
+    {
+        "name": "김나영",
+        "class": "G반",
+        "score": 70
+    },
+    {
+        "name": "이지현",
+        "class": "G반",
+        "score": 76
+    },
+    {
+        "name": "강요한",
+        "class": "G반",
+        "score": 86
+    },
+    {
+        "name": "임아령",
+        "class": "G반",
+        "score": 77
+    },
+    {
+        "name": "김지현",
+        "class": "G반",
+        "score": 42
+    },
+    {
+        "name": "오선우",
+        "class": "G반",
+        "score": 78
+    },
+    {
+        "name": "박예원",
+        "class": "H반",
+        "score": 80
+    },
+    {
+        "name": "신예지",
+        "class": "H반",
+        "score": 75
+    },
+    {
+        "name": "신동호",
+        "class": "H반",
+        "score": 77
+    },
+    {
+        "name": "김규리",
+        "class": "H반",
+        "score": 62
+    },
+    {
+        "name": "김주예",
+        "class": "H반",
+        "score": 75
+    },
+    {
+        "name": "오창민",
+        "class": "H반",
+        "score": 39
+    },
+    {
+        "name": "박나경",
+        "class": "H반",
+        "score": 64
+    },
+    {
+        "name": "이현우",
+        "class": "H반",
+        "score": 63
+    },
+    {
+        "name": "김세현",
+        "class": "H반",
+        "score": 75
+    },
+    {
+        "name": "김시현",
+        "class": "H반",
+        "score": 74
+    },
+    {
+        "name": "노하은",
+        "class": "H반",
+        "score": 59
+    },
+    {
+        "name": "목예원",
+        "class": "H반",
+        "score": 70
+    },
+    {
+        "name": "윤병찬",
+        "class": "H반",
+        "score": 76
+    },
+    {
+        "name": "이원빈",
+        "class": "H반",
+        "score": 73
+    },
+    {
+        "name": "이태현",
+        "class": "H반",
+        "score": 68
+    },
+    {
+        "name": "조수민",
+        "class": "H반",
+        "score": 77
+    },
+    {
+        "name": "조영연",
+        "class": "H반",
+        "score": 80
+    },
+    {
+        "name": "배성빈",
+        "class": "J반",
+        "score": 70
+    },
+    {
+        "name": "김동호",
+        "class": "J반",
+        "score": 71
+    },
+    {
+        "name": "황수진",
+        "class": "J반",
+        "score": 73
+    },
+    {
+        "name": "이예찬",
+        "class": "J반",
+        "score": 55
+    },
+    {
+        "name": "오은선",
+        "class": "J반",
+        "score": 60
+    },
+    {
+        "name": "김주은B",
+        "class": "J반",
+        "score": 72
+    },
+    {
+        "name": "이청하",
+        "class": "J반",
+        "score": 79
+    },
+    {
+        "name": "홍지윤",
+        "class": "J반",
+        "score": 68
+    },
+    {
+        "name": "권유나",
+        "class": "J반",
+        "score": 82
+    },
+    {
+        "name": "오대인",
+        "class": "O반",
+        "score": 67
+    },
+    {
+        "name": "유지원B",
+        "class": "O반",
+        "score": 79
+    },
+    {
+        "name": "김은진",
+        "class": "O반",
+        "score": 75
+    },
+    {
+        "name": "손예진",
+        "class": "O반",
+        "score": 79
+    },
+    {
+        "name": "정의훈",
+        "class": "O반",
+        "score": 81
+    },
+    {
+        "name": "유지원",
+        "class": "O반",
+        "score": 79
+    },
+    {
+        "name": "신경민",
+        "class": "O반",
+        "score": 76
+    },
+    {
+        "name": "정재영",
+        "class": "O반",
+        "score": 78
+    },
+    {
+        "name": "김윤진",
+        "class": "O반",
+        "score": 78
+    },
+    {
+        "name": "김민지B",
+        "class": "O반",
+        "score": 69
+    },
+    {
+        "name": "이다연",
+        "class": "O반",
+        "score": 76
+    },
+    {
+        "name": "김채은",
+        "class": "O반",
+        "score": 77
+    },
+    {
+        "name": "서지수",
+        "class": "O반",
+        "score": 81
+    },
+    {
+        "name": "권현진",
+        "class": "O반",
+        "score": 76
+    },
+    {
+        "name": "박연우",
+        "class": "O반",
+        "score": 78
+    },
+    {
+        "name": "이영주",
+        "class": "O반",
+        "score": 88
+    },
+    {
+        "name": "홍준석",
+        "class": "O반",
+        "score": 78
+    },
+    {
+        "name": "한수빈",
+        "class": "O반",
+        "score": 79
+    },
+    {
+        "name": "최혜원",
+        "class": "O반",
+        "score": 38
+    },
+    {
+        "name": "김유민",
+        "class": "P반",
+        "score": 46
+    },
+    {
+        "name": "박지희",
+        "class": "P반",
+        "score": 40
+    },
+    {
+        "name": "김민정",
+        "class": "P반",
+        "score": 56
+    },
+    {
+        "name": "유다건",
+        "class": "P반",
+        "score": 82
+    },
+    {
+        "name": "윤수별",
+        "class": "P반",
+        "score": 82
+    },
+    {
+        "name": "유해빈",
+        "class": "P반",
+        "score": 42
+    },
+    {
+        "name": "박정현",
+        "class": "P반",
+        "score": 76
+    }
+]
+            // 이와 같은 형식으로 계속 추가 가능합니다.
+        ];
+
+        document.getElementById('scoreForm').onsubmit = function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const studentClass = document.getElementById('class').value;
+
+            const result = data.find(item => item.name === name && item.class === studentClass);
+
+            if (result) {
+                document.getElementById('result').innerText = `${name}님의 점수는 ${result.score}점 입니다.`;
+            } else {
+                document.getElementById('result').innerText = '입력하신 정보가 잘못되었거나 점수를 찾을 수 없습니다.';
+            }
+        };
+    </script>
+</body>
+</html>
